@@ -1,0 +1,275 @@
+\documentclass[11pt,letterpaper,titlepage]{article}
+
+\usepackage{geometry}
+\geometry{left=1.5cm,right=1.5cm,top=1.5cm,bottom=2.5cm}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{bbm}
+
+\usepackage{amsmath}
+
+\usepackage{amssymb}
+
+\usepackage{booktabs}
+
+\usepackage{pifont}
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\lhead{}
+\rhead{}
+\lfoot{ECEN 662 Estimation and Detection Theory}
+\cfoot{\thepage}
+\rfoot{Assignment 4 @Lei Wang}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\headwidth}{\textwidth}
+\renewcommand{\footrulewidth}{0.4pt}
+\newcommand{\RomanNumeralCaps}[1]
+    {\MakeUppercase{\romannumeral #1}}
+
+\begin{document}
+
+\begin{enumerate}
+    
+    \item %Q1
+    
+    \begin{enumerate}
+        
+        \item %a
+        
+        The likelihood ratio is:
+        
+        \begin{equation*}
+            L(y) = \frac{p_1(y)}{p_0(y)} = \frac{3}{2(y+1)} \text{, with } 0 \leq y \leq 1
+        \end{equation*}
+        
+        For the likelihood ratio to be greater or equal to 1, $y \in [0, 0.5)$: choose 1. If $y = 0.5$, choose 1 or 0. If $y \in (0.5, 1]$: choose 0.
+        
+        The Bayes risk is:
+        
+        \begin{equation*}
+            0.5 \int_0^{0.5} \frac{2}{3}(y + 1)dy + 0.5 \int_{0.5}^1 dy = \frac{11}{24}
+        \end{equation*}
+        
+        \item %b
+        
+        If the cut-off value is at $t$, the risk of picking 0 is:
+        
+        \begin{equation*}
+            \int_0^t \frac{2}{3}(y + 1) dy = \frac{1}{3} t^2 + \frac{2}{3} t
+        \end{equation*}
+        
+        The risk of picking 1 is then:
+        
+        \begin{equation*}
+            \int_t^1 dy = 1 - t
+        \end{equation*}
+        
+        Risk should be equal, solve for t:
+        
+        \begin{equation*}
+            \frac{1}{3} t^2 + \frac{2}{3} t = 1 - t
+        \end{equation*}
+        
+        $t$ needs to be between 0 and 1 to make sense:
+        
+        \begin{equation*}
+            t = \frac{-5 + \sqrt{37}}{2}
+        \end{equation*}
+        
+        Above this cut-off value, pick 0. Otherwise, pick 1.
+        
+        The corresponding risk is to substitute in $t$ and get $\frac{7 - \sqrt{37}}{2}$.
+        
+        \item %c
+        
+        The decision rule is in the form:
+        
+        \begin{gather*}
+            \begin{cases}
+                1 \text{, if } \frac{3}{2(y+1)} > t \\
+                \gamma \text{, if } \frac{3}{2(y+1)} = t \\
+                0 \text{, if } \frac{3}{2(y+1)} < t
+            \end{cases}
+            \rightarrow 
+            \begin{cases}
+                1 \text{, if } y < \frac{3}{2t} - 1 \\
+                \gamma \text{, if } y = \frac{3}{2t} - 1 \\
+                0 \text{, if } y > \frac{3}{2t} - 1
+            \end{cases}
+        \end{gather*}
+        
+        Let $\frac{3}{2t} - 1 = u$ The false-positive probability is:
+        
+        \begin{equation*}
+            \int_0^{u} \frac{2}{3}(y + 1) dy = 
+            \begin{cases}
+                0 \text{, if } u \leq 0 \\
+                \frac{1}{3} u^2 + \frac{2}{3} u \text{, if } 0 < u < 1 \\
+                1 \text{, if } u > 1
+            \end{cases}
+        \end{equation*}
+        
+        To obtain the cut-off value, solve:
+        
+        \begin{equation*}
+            \frac{1}{3} u^2 + \frac{2}{3} u = \alpha
+        \end{equation*}
+        
+        And get:
+        
+        \begin{equation*}
+            u = -1 + \sqrt{1 + 3 \alpha}
+        \end{equation*}
+        
+        Put together:
+        
+        \begin{gather*}
+            \begin{cases}
+                1 \text{, if } y \leq -1 + \sqrt{1 + 3 \alpha} \\
+                0 \text{, if } y > -1 + \sqrt{1 + 3 \alpha}
+            \end{cases}
+        \end{gather*}
+        
+    \end{enumerate}
+    
+    \item %Q2
+    
+    \begin{enumerate}
+        
+        \item %a
+        
+        The likelihood ratio is:
+        
+        \begin{equation*}
+            L(y) = \frac{\frac{1}{\pi (1 + (y - s)^2)}}{\frac{1}{\pi (1 + (y + s)^2)}} = \frac{1 + (y + s)^2}{1 + (y - s)^2}
+        \end{equation*}
+        
+        For the likelihood ratio to be greater or equal to 1:
+        
+        \begin{equation*}
+            \begin{aligned}
+                \frac{1 + (y + s)^2}{1 + (y - s)^2} &\geq 1 \\
+                y &\geq 0
+            \end{aligned}
+        \end{equation*}
+        
+        So the cut-off value is 0: pick 1 if $y \geq 0$, otherwise, pick 0.
+        
+        The Bayes risk is:
+        
+        \begin{equation*}
+            0.5 \int_{-\infty}^0 \frac{1}{\pi (1 + (y - s)^2)} dy + 0.5 \int_0^{\infty} \frac{1}{\pi (1 + (y + s)^2)} dy = \frac{1}{2} - \frac{\tan^{-1} (s)}{\pi}
+        \end{equation*}
+        
+        \item %b
+        
+        Solve for the risk:
+        
+        \begin{equation*}
+            \int_{-\infty}^0 \frac{1}{\pi (1 + (y - s)^2)} dy = \int_0^{\infty} \frac{1}{\pi (1 + (y + s)^2)} dy
+        \end{equation*}
+        
+        The cut-off value is still 0. The risk is $\frac{1}{2} - \frac{\tan^{-1} (s)}{\pi}$.
+        
+        \item %c
+        
+        
+        
+    \end{enumerate}
+    
+    \item %Q4
+    
+    The likelihood ratio is:
+    
+    \begin{equation*}
+        L(y) = e^{y - \frac{1}{2}}
+    \end{equation*}
+    
+    Given $C_{11} < C_{01}$:
+    
+    \begin{equation*}
+        L(y) = e^{y - \frac{1}{2}} \geq \frac{\pi_0(C_{10} - C_{00})}{\pi_1(C_{01} - C_{11})} = \frac{1}{N}
+    \end{equation*}
+    
+    Simplify:
+    
+    \begin{equation*}
+        \begin{aligned}
+            e^{y - \frac{1}{2}} &\geq \frac{1}{N} \\
+            y - \frac{1}{2} &\geq \ln \frac{1}{N} \\
+            y &\geq \frac{1}{2} + \ln \frac{1}{N}
+        \end{aligned}
+    \end{equation*}
+    
+    Denote the cut-off value as $t$:
+    
+    The Bayes risk is:
+    
+    \begin{equation*}
+        0.5 N \int_{-\infty}^t p_1(y) dy + 0.5 \int_{t}^{\infty} p_0(y) dy = 0.5 N \Phi(t - 1) + 0.5 (1 - \Phi(t))
+    \end{equation*}
+    
+    By recognizing the standard Gaussian CDF formula.
+    
+    As $N \rightarrow \infty$, the cut-off value $t \rightarrow -\infty$. Hence the risk will converge to 0.5. When N is very large, i.e. the cost of choosing 0 when it is 1, is very large. Therefore, it is favorable to choose 1 to minimize the risk.
+    
+    In the minimax rule, the priors are unknown. Hence modoify the likelihood ratio to:
+    
+    \begin{equation*}
+        L(y) = e^{y - \frac{1}{2}} \geq \frac{\pi_0(C_{10} - C_{00})}{\pi_1(C_{01} - C_{11})} = \frac{\pi_0}{\pi_1 N}
+    \end{equation*}
+    
+    Simplify to:
+    
+    \begin{equation*}
+        y \geq \frac{1}{2} + \ln \frac{\pi_0}{\pi_1 N}
+    \end{equation*}
+    
+    Denote the cut-off value as $t$.
+    
+    Under minimax rule, need to solve:
+    
+    \begin{equation*}
+        \begin{aligned}
+            1 - \Phi(t) &= N \Phi(t - 1) \\
+            \Phi(t) + N \Phi(t - 1) &= 1
+        \end{aligned}
+    \end{equation*}
+    
+    As $\Phi(...)$ is always between 1 and 0, when $N$ is large:
+    
+    \begin{equation*}
+        \Phi(t - 1) \leq \frac{1}{N} \rightarrow 0
+    \end{equation*}
+    
+    So always choose 1.
+    
+    \item %Q5
+    
+    The risks are the conditional expectations, let $t$ be the cut-off value:
+    
+    \begin{gather*}
+        \begin{cases}
+            E_1 &= \int_0^t \alpha e^{-\alpha \theta}\theta e^{-\theta y} d\theta  = \frac{\alpha(1 - (\alpha t + yt + 1)e^{-(\alpha + y)t})}{(\alpha + y)^2} \\
+            E_0 &= \int_t^{\infty} \alpha e^{-\alpha \theta}\theta e^{-\theta y} d\theta = \frac{\alpha(\alpha t + yt + 1) e^{-(\alpha + y)t}}{(\alpha + y)^2}
+        \end{cases}
+    \end{gather*}
+    
+    Need to minimize the risks.
+    
+    The risks add to $\frac{\alpha}{(\alpha + y)^2}$: it is best to equally divide the risk between the two hypothesis. The decision rule is:
+    
+    \begin{gather*}
+        \begin{cases}
+            1 \text{, if } (\alpha t + yt + 1) e^{-(\alpha + y)t} \geq \frac{1}{2} \\
+            0 \text{, if } (\alpha t + yt + 1) e^{-(\alpha + y)t} < \frac{1}{2}
+        \end{cases}
+    \end{gather*}
+    
+\end{enumerate}
+
+\end{document}
